@@ -1,0 +1,39 @@
+string Solution::solve(string a) {
+    map<char, int> mp;
+    int n = a.size();
+    for(int i=0;i<n;i++)
+    {
+        mp[a[i]]++;
+    }
+    vector<int > present(26, 0);
+    stack<char> s;
+    s.push(a[0]);
+    mp[a[0]]--;
+    present[s.top() - 'a'] = 1;
+    for(int i=1;i<n;i++)
+    {
+        
+        mp[a[i]]--;
+        if(present[a[i] - 'a'] == 1)
+        {
+            continue;
+        }
+        while(!s.empty() && a[i] < s.top() && mp[s.top()] > 0)
+        {
+            
+            present[s.top() - 'a'] = 0;
+            s.pop();
+        }
+        s.push(a[i]);
+        present[a[i] - 'a'] = 1;
+    }
+    
+    string ans = "";
+    while(!s.empty())
+    {
+        ans += s.top();
+        s.pop();
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
