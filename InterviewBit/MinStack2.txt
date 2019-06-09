@@ -1,0 +1,69 @@
+stack<int> s;
+int mnm  = INT_MAX;
+MinStack::MinStack() {
+    while(!s.empty())
+    {
+        s.pop();
+    }
+    return ;
+}
+
+void MinStack::push(int x) {
+   if(s.size() == 0)
+   {
+       s.push(x);
+       mnm = s.top();
+   }
+   else if(x > mnm)
+   {
+       s.push(x);
+   }
+   else
+   {
+       //prev_min = mnm;
+       //mnm = x;
+       s.push(2*x-mnm);
+       mnm=x;
+   }
+   
+   
+}
+
+void MinStack::pop() {
+    if(s.size() != 0)
+    {
+        if(s.top()<mnm)
+        {
+            int temp = s.top();
+            s.pop();
+            mnm = 2*mnm - temp;
+        }
+        else
+        {
+            s.pop();
+        }
+    }
+    return;
+}
+
+int MinStack::top() {
+    if(s.size() != 0)
+    {
+        if(s.top() >= mnm)
+        {
+            return s.top();
+        }
+        else
+        {
+            return mnm;
+        }
+    }
+    return -1;
+}
+
+int MinStack::getMin() {
+    if(s.empty())
+    return -1;
+    return mnm;
+}
+
