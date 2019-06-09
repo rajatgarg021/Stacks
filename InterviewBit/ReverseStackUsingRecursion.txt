@@ -1,0 +1,44 @@
+stack<int> s;
+
+void pushBottom(int k)
+{
+    if(s.empty())
+    {
+        s.push(k);
+    }
+    else 
+    {
+        int y = s.top();
+        s.pop();
+        pushBottom(k);
+        s.push(y);
+    }
+    return ;
+}
+
+void revers()
+{
+    if(!s.empty())
+    {
+        int x = s.top();
+        s.pop();
+        revers();
+        pushBottom(x);
+    }
+    return ;
+}
+vector<int> Solution::solve(vector<int> &a) {
+    for(int i=0;i<a.size();i++)
+    {
+        s.push(a[i]);
+    }
+    revers();
+    vector<int> v;
+    while(!s.empty())
+    {
+        v.push_back(s.top());
+        s.pop();
+    }
+    reverse(v.begin(), v.end());
+    return v;
+}
