@@ -1,0 +1,55 @@
+vector<int> nse(vector<int> v)
+{
+    int n = v.size();
+    vector<int> ans(n, 0);
+    stack<int> s;
+    
+    for(int i=0;i<n;i++)
+    {
+        while(!s.empty() && v[s.top()] >= v[i])
+        {
+            s.pop();
+        }
+        if(!s.empty())
+        {
+            ans[i] = s.top()+1;
+        }
+        s.push(i);
+    }
+    return ans;
+    
+}
+vector<int> nseright(vector<int> v)
+{
+    int n = v.size();
+    vector<int> ans(n, n-1);
+    stack<int> s;
+    
+    for(int i=n-1;i>=0;i--)
+    {
+        while(!s.empty() && v[s.top()] >= v[i])
+        {
+            s.pop();
+        }
+        if(!s.empty())
+        {
+            ans[i] = s.top()-1;
+        }
+        s.push(i);
+    }
+    return ans;
+    
+}
+
+int Solution::largestRectangleArea(vector<int> &a) {
+    int n = a.size();
+    vector<int> left = nse(a);
+    vector<int> right = nseright(a);
+    int mxm = 0;
+    for(int i=0;i<n;i++)
+    {
+        mxm = max(mxm,( (right[i] - left[i] + 1)*a[i]));
+    }
+    return mxm;
+    
+}
