@@ -1,0 +1,36 @@
+int Solution::trap(const vector<int> &a) {
+    int n = a.size();
+    int maxleft = 0;
+    int maxright = 0;
+    int i=0;
+    int j = n-1;
+    int ans = 0;
+    while(i <= j)
+    {
+        if(a[i] <= a[j])
+        {
+            if(a[i] > maxleft)
+            {
+                maxleft = a[i];
+            }
+            else
+            {
+                ans += maxleft - a[i];
+            }
+            i++;
+        }
+        else
+        {
+            if(a[j] > maxright)
+            {
+                maxright = a[j];
+            }
+            else
+            {
+                ans += maxright - a[j];
+            }
+            j--;
+        }
+    }
+    return ans;
+}
